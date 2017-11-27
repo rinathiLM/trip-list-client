@@ -1,25 +1,136 @@
 <!DOCTYPE html>
 <html>
-    <head>
-      <title>Example</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      <!-- Do not add `link` tags-->
-      <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<head>
+  <title>Tripit List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      <!-- Do not add `script` tags-->
-      <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
-      <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
-    </head>
-    <body class="container-fluid">
-      <h1>Example</h1>
+  <!-- Do not add `link` tags-->
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-      ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-      est laborum.</p>
-    </body>
+  <!-- Do not add `script` tags-->
+  <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+  <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+  <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
+</head>
+
+<body class="container-fluid">
+  <!-- nav bar -->
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+        <a class="navbar-brand" href="#">Tripit List</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="hide-when-logged-in"><a href="#" data-toggle="modal" data-target="#sign-up-modal">Sign Up</a></li>
+          <li class="hide-when-logged-in"><a href="#" data-toggle="modal" data-target="#sign-in-modal">Login</a></li>
+          <li class="display-when-logged-in"><a href="#">My Trips</a></li>
+          <li class="display-when-logged-in"><a href="#" data-toggle="modal" data-target="#change-pwd-modal">Change Password</a></li>
+          <li class="display-when-logged-in"><a href="#" id="sign-out" class="sign-out-link">Sign Out</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- user messages -->
+  <div id="message" class="message"></div>
+
+  <!-- location entry/google maps -->
+  <div class="display-when-logged-in">
+    <div class="location">
+    <h3>Enter your next adventure here!</h3>
+    <input name="trip[location]" type="string">
+    <button class="btn btn-primary">Search</button>
+  </div>
+  </div>
+
+  <!-- handlebars -->
+  <div class="row content" id="content">
+    <div class="container-fluid">
+    </div>
+  </div>
+
+  <!-- MODALS MODALS MODALS -->
+  <!--  sign-up modal -->
+  <div class="modal fade" id="sign-up-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Sign Up</h4>
+          <span id="signup-message"></span>
+        </div>
+        <form class="sign-up-form form-horizontal" id="sign-up">
+          <input type="email" name="credentials[email]" id="sign-up-email" class="form-control" placeholder="Email">
+          <input type="password" name="credentials[password]" id="sign-up-password" class="form-control" placeholder="Password" required>
+          <input type="password" name="credentials[password_confirmation]" id="sign-up-password-confirmation" class="form-control" placeholder="Confirm Password">
+          <div class="modal-body">
+          </div>
+          <div class="modal-footer">
+            <button type="submit" name="submit" class="btn btn-primary">Sign Up</button>
+            <button type="reset" class="btn btn-outline-primary">Reset</button>
+            <button type="button" class="btn btn-secondary" id="clearSignup" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!--  sign-in modal -->
+  <div class="modal fade" id="sign-in-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Login</h4>
+          <span id="login-message"></span>
+        </div>
+        <form class="sign-in-form form-horizontal" id="login">
+          <input type="email" name="credentials[email]" id="sign-in-email" class="form-control" placeholder="Email">
+          <input type="password" name="credentials[password]" id="sign-in-password" class="form-control" placeholder="Password">
+          <div class="modal-body">
+          </div>
+          <div class="modal-footer">
+            <button type="submit" name="submit" class="btn btn-primary">Login</button>
+            <button type="reset" class="btn btn-outline-primary">Reset</button>
+            <button type="button" class="btn btn-secondary" id="clearLogin" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!--  change password modal -->
+  <div class="modal fade" id="change-pwd-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Change Password</h4>
+          <span id="password-message"></span>
+        </div>
+        <form class="change-pwd-form form-horizontal" id="change-password">
+          <input type="password" name="passwords[old]" id="change-password-old" class="form-control" placeholder="Current Passward" required>
+          <input type="password" name="passwords[new]" id="change-password-new" class="form-control" placeholder="New Password" required>
+          <div class="modal-body">
+          </div>
+          <div class="modal-footer">
+            <button type="submit" name="submit" class="btn btn-primary">Confirm</button>
+            <button type="button" class="btn btn-secondary" id="clearPass" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</body>
+
 </html>

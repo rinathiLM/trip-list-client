@@ -1,2 +1,50 @@
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap';
+
+body {
+  .display-when-logged-in {
+    display: none;
+  }
+  .message {
+    position: absolute;
+    padding-top: 75px;
+  }
+}
+
+
+.navbar-brand {
+  font-family: 'Amatic SC', cursive;
+  font-size: 40px;
+}
+
+.navbar {
+  font-family: 'Amatic SC', cursive;
+  font-size: 25px;
+}
+
+h3 {
+  font-family: 'Amatic SC', cursive;
+  display: inline-block;
+}
+
+.location {
+  position: absolute;
+  padding-top: 100px;
+}
+
+.modal-title {
+  font-family: 'Amatic SC', cursive;
+}
+
+// #map {
+//   width: 100%;
+//   height: 400px;
+//   padding-top: 110px;
+//   display: inline-block;
+// }
+
+.form-horizontal {
+  margin-left: 15px;
+  margin-right: 15px;
+  padding-top: 20px;
+}
