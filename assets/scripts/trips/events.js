@@ -16,11 +16,11 @@ const onCreateTrip = (event) => {
 
 const onShowAllTrips = (event) => {
   event.preventDefault()
-  $('.location').hide()
   api.getTrips()
     .then(ui.getTripsSuccess)
-// had to do the below so that all of these run before my handlebars since the button functionality relies on the below
-// .then(() => $('.update).on('submit', onUpdateTrip))
+    // have to enable this since update/delete is in handlebars
+    .then(() => $('.update-trip').on('click', onUpdateTrip))
+    .then(() => $('.undo-update').on('click', onUndoUpdate))
     .then(() => $('.delete-trip').on('click', onDeleteTrip))
     .catch(ui.getTripsFailure)
 }
@@ -29,27 +29,67 @@ const onDeleteTrip = (event) => {
   event.preventDefault()
   const tripId = $(event.target).data('id')
   console.log('trip to delete is ', tripId)
-  $('.modal-backdrop').remove()
   api.deleteTrip(tripId)
     .then(ui.deleteTripSuccess(tripId))
     .then(getTripsAgain)
-    // .then(() => $('#delete-trip').on('click', onDeleteTrip))
     .catch(ui.deleteTripFailure)
+}
+
+const onUpdateTrip = (event) => {
+  event.preventDefault()
+  console.log('yes is clicked in update modal')
+  const tripId = $(event.target).data('id')
+  console.log('trip to edit id is ', tripId)
+  api.updateTrip(tripId)
+    .then(ui.updateTripSuccess(tripId))
+    .then(getTripsAgain)
+    .catch(ui.updateTripFailure)
+}
+
+const onUndoUpdate = (event) => {
+  event.preventDefault()
+  console.log('not yet is clicked in update modal')
+  const tripId = $(event.target).data('id')
+  console.log('trip to edit id is ', tripId)
+  api.updateTripFalse(tripId)
+    .then(ui.updateTripFalseSuccess(tripId))
+    .then(getTripsAgain)
+    .catch(ui.updateTripFalseFailure)
 }
 
 const getTripsAgain = (event) => {
   api.getTrips()
     .then(ui.getTripsSuccess)
-    // update handlebars too
-    // .then(() => $('.update).on('submit', onUpdateTrip))
+    // have to enable this since update/delete is in handlebars
+    .then(() => $('.update-trip').on('click', onUpdateTrip))
+    .then(() => $('.undo-update').on('click', onUndoUpdate))
     .then(() => $('.delete-trip').on('click', onDeleteTrip))
     .catch(ui.getTripsFailure)
+}
+
+const goBack = (event) => {
+  $('.content').empty()
+  $('.location').show()
+  $('.back-btn').hide()
+}
+
+const clearUpdateMessage = () => {
+  $('#clearUpdate').text('')
+}
+
+const clearDeleteMessage = () => {
+  $('#clearDelete').text('')
 }
 
 const addHandlers = function () {
   $('#enter-location').on('submit', onCreateTrip)
   $('#show-trips').on('click', onShowAllTrips)
   $('.delete-trip').on('click', onDeleteTrip)
+  $('.update-trip').on('click', onUpdateTrip)
+  $('.back-btn').on('click', goBack)
+  $('.undo-update').on('click', onUndoUpdate)
+  $('#update-trip-modal').on('show.bs.modal', clearUpdateMessage)
+  $('#delete-trip-modal').on('show.bs.modal', clearDeleteMessage)
 }
 
 module.exports = {

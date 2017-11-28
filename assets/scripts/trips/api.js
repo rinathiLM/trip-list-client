@@ -37,8 +37,40 @@ const deleteTrip = (tripId) => {
   })
 }
 
+const updateTrip = (tripId) => {
+  return $.ajax({
+    url: config.apiOrigin + '/trips/' + tripId,
+    method: 'PATCH',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    },
+    data: {
+      trip: {
+        done: true
+      }
+    }
+  })
+}
+
+const updateTripFalse = (tripId) => {
+  return $.ajax({
+    url: config.apiOrigin + '/trips/' + tripId,
+    method: 'PATCH',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    },
+    data: {
+      trip: {
+        done: false
+      }
+    }
+  })
+}
+
 module.exports = {
   createTrip,
   getTrips,
-  deleteTrip
+  deleteTrip,
+  updateTrip,
+  updateTripFalse
 }

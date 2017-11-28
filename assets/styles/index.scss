@@ -12,6 +12,10 @@ body {
   }
 }
 
+#map {
+  height: 50%;
+}
+
 
 .navbar-brand {
   font-family: 'Amatic SC', cursive;
@@ -37,6 +41,9 @@ h3 {
   font-family: 'Amatic SC', cursive;
 }
 
+.back-btn {
+  display: none;
+}
 .content {
   padding-top: 225px;
   padding-left: 50px;

@@ -15,7 +15,9 @@ const getTripsSuccess = (data) => {
   console.log('got all trips successfully')
   const showTripsHtml = showTripsTemplate({ trips: data.trips })
   $('.content').html(showTripsHtml)
-  // $('#message').text('')
+  $('#message').text('')
+  $('.location').hide()
+  $('.back-btn').show()
 }
 
 const getTripsFailure = function () {
@@ -23,11 +25,33 @@ const getTripsFailure = function () {
 }
 
 const deleteTripSuccess = (tripId) => {
-  console.log('delete trip successfully')
+  console.log('deleted trip successfully')
+  $('.modal-backdrop').remove()
 }
 
 const deleteTripFailure = () => {
   console.log('Error deleting trip')
+  $('#delete-message').text('Error deleting this entry, please try again.')
+}
+
+const updateTripSuccess = (data) => {
+  console.log('updated trip successfully, data returned is ', data)
+  $('.modal-backdrop').remove()
+}
+
+const updateTripFailure = () => {
+  console.log('Error updating trip')
+  $('#update-message').text('Error udpating this entry, please try again.')
+}
+
+const updateTripFalseSuccess = (data) => {
+  console.log('updated trip successfully, data returned is ', data)
+  $('.modal-backdrop').remove()
+}
+
+const updateTripFalseFailure = () => {
+  console.log('Error updating trip')
+  $('#update-message').text('Error udpating this entry, please try again.')
 }
 
 module.exports = {
@@ -36,5 +60,9 @@ module.exports = {
   getTripsSuccess,
   getTripsFailure,
   deleteTripSuccess,
-  deleteTripFailure
+  deleteTripFailure,
+  updateTripSuccess,
+  updateTripFailure,
+  updateTripFalseSuccess,
+  updateTripFalseFailure
 }

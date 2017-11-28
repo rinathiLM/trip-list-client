@@ -15,6 +15,7 @@ const signInSuccess = function (response) {
   $('.sign-in-form')[0].reset()
   $('.display-when-logged-in').show()
   $('.hide-when-logged-in').hide()
+  $('.location').show()
   $('#sign-up-modal').modal('hide')
   $('.sign-up-form')[0].reset()
 }
@@ -26,10 +27,12 @@ const signInFailure = function () {
 
 const signOutSuccess = function () {
   console.log('successfully signed out')
-  $('#message').text('You\'re now signed out.')
   store.user = null
   $('.hide-when-logged-in').show()
   $('.display-when-logged-in').hide()
+  $('.back-btn').hide()
+  $('.content').empty()
+  $('#message').text('')
 }
 
 const signOutFailure = function () {
