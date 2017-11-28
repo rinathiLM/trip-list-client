@@ -1,0 +1,26 @@
+{{#if trips}}
+  <table class="table table-hover header-fixed">
+    <thead>
+      <tr>
+        <th class="column-1">Location</th>
+        <th class="column-2">Have you gone there?</th>
+        <th class="column-3">Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each trips as |trip|}}
+        <tr>
+          <td>{{trip.location}}</td>
+          <td>{{trip.done}}</td>
+          <!-- link to update and delete each hike in the last column -->
+          <td>
+            <a class="update-trip-link" data-id="{{trip.id}}" href="update-trip{{trip.id}}" data-toggle="modal">Update</a><br>
+            <a class="delete-trip-link" data-id="{{trip.id}}" href="#">Delete</a>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+{{else}}
+  <p>It doesn't look like you have any trips added yet.</p>
+  </table>
+{{/if}}

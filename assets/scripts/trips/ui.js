@@ -1,4 +1,5 @@
 'use strict'
+const showTripsTemplate = require('../templates/show-trips.handlebars')
 
 const createTripSuccess = function () {
   console.log('successfully created trip')
@@ -7,10 +8,24 @@ const createTripSuccess = function () {
 }
 
 const createTripFailure = function () {
-  console.log('error creating trip')
+  console.log('Error creating a trip')
+}
+
+const getTripsSuccess = (data) => {
+  console.log('got all trips successfully')
+  const showTripsHtml = showTripsTemplate({ trips: data.trips })
+  $('.content').html(showTripsHtml)
+  // $('.location').hide()
+  // $('#message').text('')
+}
+
+const getTripsFailure = function () {
+  console.log('Error getting all trips')
 }
 
 module.exports = {
   createTripSuccess,
-  createTripFailure
+  createTripFailure,
+  getTripsSuccess,
+  getTripsFailure
 }
