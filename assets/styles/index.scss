@@ -1,6 +1,7 @@
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap';
 @import url('//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap-glyphicons.css');
+@import './navbar.scss';
 
 body {
   .display-when-logged-in {
@@ -10,29 +11,26 @@ body {
     position: absolute;
     padding-top: 75px;
   }
+
+  background-repeat: no-repeat;
 }
 
 #map {
-  margin-top: 200px;
-  padding-top: 100px;
-  display: block;
+  margin-top: 10px;
+  // display: block;
   // float:left;
   // margin-left:0px;
-  height: 350px;
-  width: 75%;
+  height: 400px;
+  width: 90%;
   /* margin-top:59px; only if header fixed*/
 }
 
-.navbar-brand {
-  font-family: 'Amatic SC', cursive;
-  font-size: 30px;
-}
-
-.navbar {
-  font-family: 'Amatic SC', cursive;
-  font-size: 25px;
-  height: 35px;
-  display: block;
+#home-msg {
+  font-family: 'Rochester', cursive;
+  font-size: 40px;
+  // display: inline-block;
+  padding-top: 50px;
+  text-align: center;
 }
 
 h3 {
@@ -41,7 +39,7 @@ h3 {
 }
 
 .location {
-  display: inline-block;
+  // display: inline-block;
   // position: absolute;
   padding-top: 100px;
 }
@@ -64,7 +62,7 @@ h3 {
 
 // handlebars content
 .content {
-  padding-top: 15px;
+  margin-top: 75px;
   padding-left: 50px;
   padding-right: 50px;
 }

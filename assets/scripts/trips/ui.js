@@ -17,6 +17,7 @@ const getTripsSuccess = (data) => {
   $('.content').html(showTripsHtml)
   $('#message').text('')
   $('.location').hide()
+  $('#map').hide()
   $('.back-btn').show()
 }
 

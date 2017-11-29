@@ -9,7 +9,7 @@ const signUpFailure = function () {
 
 const signInSuccess = function (response) {
   console.log('successfully logged in')
-  $('#message').text('You\'re now signed in.')
+  // $('#message').text('You\'re now signed in.')
   store.user = response.user
   $('#sign-in-modal').modal('hide')
   $('.sign-in-form')[0].reset()
@@ -18,6 +18,7 @@ const signInSuccess = function (response) {
   $('.location').show()
   $('#sign-up-modal').modal('hide')
   $('.sign-up-form')[0].reset()
+  $('#home-msg').hide()
 }
 
 const signInFailure = function () {
@@ -31,6 +32,7 @@ const signOutSuccess = function () {
   $('.hide-when-logged-in').show()
   $('.display-when-logged-in').hide()
   $('.back-btn').hide()
+  $('#enter-location')[0].reset()
   $('.content').empty()
   $('#message').text('')
 }

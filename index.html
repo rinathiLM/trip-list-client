@@ -12,12 +12,12 @@
   <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
   <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
   <!-- fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Rochester" rel="stylesheet">
 </head>
 
 <body class="container-fluid">
   <!-- nav bar -->
-  <div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar navbar-toggleable-md navbar-inverse navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -38,115 +38,127 @@
       </div>
     </div>
   </div>
-
+  <!-- home screen -->
+  <h2 id="home-msg">Sign up or login to start planning your trip bucketlist</h2>
+  <div class="background">
+  </div>
   <!-- user messages -->
   <div id="message" class="message"></div>
 
-  <!-- location entry/google maps -->
+  <!-- GOOGLE MAPS  -->
+  <!-- location entry -->
   <div class="display-when-logged-in">
     <div class="location">
       <h3>Enter your next adventure here!</h3>
       <form id="enter-location">
-        <input name="trip[location]" type="text" id="location-entry">
-        <input type="submit" value="Search" class="btn btn-primary" id="search-location-btn">
+        <input name="trip[location]" type="text" id="location-entry" placeholder="Press enter to search" required>
+        <input type="submit" value="Add to my list" class="btn btn-primary" id="search-location-btn">
       </form>
     </div>
-  </div>
   <!-- google maps -->
-  <!-- <input id="pac-input" class="controls" type="text" placeholder="Search for a location"> -->
   <div id="map"></div>
   <script>
-  function initMap() {
-    var options = {
-      zoom: 8,
-      center: {lat: -33.8666, lng: 151.1958}
+    function initMap() {
+      var options = {
+        zoom: 10,
+        center: {
+          lat: 47.6080,
+          lng: -122.3351
+        }
+      }
+
+      var map = new google.maps.Map(document.getElementById('map'), options)
+
+      // var marker = new google.maps.Marker({
+      //   position: {lat: -33.8666, lng: 151.1958},
+      //   map: map
+      //   // for different markers - icon: ''
+      // })
+
+      var searchBox = new google.maps.places.SearchBox(document.getElementById('location-entry'))
+
+      map.addListener('bounds_changed', function() {
+        searchBox.setBounds(map.getBounds());
+      });
+
+      markers = []
+
+      searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+          return;
+        }
+
+        // Clear out the old markers.
+        markers.forEach(function(marker) {
+          marker.setMap(null);
+        });
+        markers = [];
+
+        // For each place, get the icon, name and location.
+        var bounds = new google.maps.LatLngBounds();
+        places.forEach(function(place) {
+          if (!place.geometry) {
+            console.log("Returned place contains no geometry");
+            return;
+          }
+          var icon = {
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+          };
+
+          // Create a marker for each place.
+          markers.push(new google.maps.Marker({
+            map: map,
+            icon: icon,
+            title: place.name,
+            position: place.geometry.location
+          }));
+
+          if (place.geometry.viewport) {
+            // Only geocodes have viewport.
+            bounds.union(place.geometry.viewport);
+          } else {
+            bounds.extend(place.geometry.location);
+          }
+        });
+        map.fitBounds(bounds);
+      })
     }
-
-    var map = new google.maps.Map(document.getElementById('map'), options)
-
-    // var marker = new google.maps.Marker({
-    //   position: {lat: -33.8666, lng: 151.1958},
-    //   map: map
-    //   // for different markers - icon: ''
-    // })
-
-    var searchBox = new google.maps.places.SearchBox(document.getElementById('location-entry'))
-
-    map.addListener('bounds_changed', function() {
-      searchBox.setBounds(map.getBounds());
-    });
-
-    markers = []
-
-    searchBox.addListener('places_changed', function() {
-   var places = searchBox.getPlaces();
-
-   if (places.length == 0) {
-     return;
-   }
-
-   // Clear out the old markers.
-   markers.forEach(function(marker) {
-     marker.setMap(null);
-   });
-   markers = [];
-
-   // For each place, get the icon, name and location.
-   var bounds = new google.maps.LatLngBounds();
-   places.forEach(function(place) {
-     if (!place.geometry) {
-       console.log("Returned place contains no geometry");
-       return;
-     }
-     var icon = {
-       url: place.icon,
-       size: new google.maps.Size(71, 71),
-       origin: new google.maps.Point(0, 0),
-       anchor: new google.maps.Point(17, 34),
-       scaledSize: new google.maps.Size(25, 25)
-     };
-
-     // Create a marker for each place.
-     markers.push(new google.maps.Marker({
-       map: map,
-       icon: icon,
-       title: place.name,
-       position: place.geometry.location
-     }));
-
-     if (place.geometry.viewport) {
-       // Only geocodes have viewport.
-       bounds.union(place.geometry.viewport);
-     } else {
-       bounds.extend(place.geometry.location);
-     }
-   });
-   map.fitBounds(bounds);
- })
-
-    // google.maps.event.addListener(searchBox, 'places_changed', function (){
-    //   var places = searchBox.getPlaces()
-    //   var bounds = new google.maps.LatLngBounds()
-    //   var i, place
-    //
-    //   for (i=0; place=places[i]; i++) {
-    //     bounds.extend(place.geometry.location)
-    //     marker.setPosition(place.geometry.location)
-    //   }
-    //
-    //   map.fitBounds(bounds)
-    //   map.setZoom(8)
-    // })
-  }
   </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrFjP4NwF0V5vMmwBBXQchO66K64Iq1vc&callback=initMap&libraries=places" async defer></script>
-
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrFjP4NwF0V5vMmwBBXQchO66K64Iq1vc&callback=initMap&libraries=places" async defer></script>
+  </div>
+  <!-- END GOOGLE MAPS  -->
   <!-- handlebars content -->
   <div class="content">
     <div class="container-fluid">
     </div>
   </div>
 
+  <!-- FILESTACK for pictures upload -->
+  <input class="btn btn-primary modal-button" type="button" value="Upload" onclick="showPicker()" />
+
+  <script src="https://static.filestackapi.com/v3/filestack.js"></script>
+
+  <script type="text/javascript">
+    const client = filestack.init('ArtZK1CTQ8eWbbaSVG2E8z');
+    let storeImageObject
+    let getImageurl
+    function showPicker() {
+      client.pick().
+      then(
+        function(result) {
+          result.filesUploaded.forEach(function(file) {
+            addLink(file)
+          })
+        })
+      }
+  </script>
+  <!-- END FILESTACK -->
   <button class="back-btn btn btn-primary">Back</button>
 
   <!-- MODALS MODALS MODALS -->
