@@ -8,40 +8,44 @@ body {
     display: none;
   }
   .message {
-    position: absolute;
-    padding-top: 75px;
+    padding-top: 25px;
+    font-family: 'Amatic SC', cursive;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
   }
-
-  background-repeat: no-repeat;
+  padding-top: 50px;
 }
 
 #map {
-  margin-top: 10px;
+  margin-top: 15px;
   // display: block;
   // float:left;
   // margin-left:0px;
   height: 400px;
-  width: 90%;
+  width: 80%;
   /* margin-top:59px; only if header fixed*/
 }
 
 #home-msg {
   font-family: 'Rochester', cursive;
   font-size: 40px;
-  // display: inline-block;
-  padding-top: 50px;
+  // padding-top: 60px;
   text-align: center;
+  font-weight: lighter;
 }
 
 h3 {
   font-family: 'Amatic SC', cursive;
-  display: inline-block;
+  font-size: 30px;
+  font-weight: bold;
+//  display: inline-block;
 }
 
 .location {
   // display: inline-block;
   // position: absolute;
-  padding-top: 100px;
+  // margin-top: 15px;
 }
 
 .back-btn {
@@ -58,11 +62,13 @@ h3 {
 .modal-title,
 .modal-body {
   font-family: 'Amatic SC', cursive;
+  font-size: 25px;
+  font-weight: bold;
 }
 
 // handlebars content
 .content {
-  margin-top: 75px;
+  // margin-top: 75px;
   padding-left: 50px;
   padding-right: 50px;
 }

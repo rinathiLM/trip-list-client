@@ -12,7 +12,7 @@
   <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
   <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
   <!-- fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Rochester" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Rochester|Fjalla+One" rel="stylesheet">
 </head>
 
 <body class="container-fluid">
@@ -25,7 +25,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-        <a class="navbar-brand" href="#">Tripit List<span class="glyphicon glyphicon-plane"></span></a>
+        <a class="navbar-brand" href="#">Tripit List <span class="glyphicon glyphicon-plane"></span></a>
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
@@ -55,84 +55,14 @@
         <input type="submit" value="Add to my list" class="btn btn-primary" id="search-location-btn">
       </form>
     </div>
-  <!-- google maps -->
-  <div id="map"></div>
-  <script>
-    function initMap() {
-      var options = {
-        zoom: 10,
-        center: {
-          lat: 47.6080,
-          lng: -122.3351
-        }
-      }
-
-      var map = new google.maps.Map(document.getElementById('map'), options)
-
-      // var marker = new google.maps.Marker({
-      //   position: {lat: -33.8666, lng: 151.1958},
-      //   map: map
-      //   // for different markers - icon: ''
-      // })
-
-      var searchBox = new google.maps.places.SearchBox(document.getElementById('location-entry'))
-
-      map.addListener('bounds_changed', function() {
-        searchBox.setBounds(map.getBounds());
-      });
-
-      markers = []
-
-      searchBox.addListener('places_changed', function() {
-        var places = searchBox.getPlaces();
-
-        if (places.length == 0) {
-          return;
-        }
-
-        // Clear out the old markers.
-        markers.forEach(function(marker) {
-          marker.setMap(null);
-        });
-        markers = [];
-
-        // For each place, get the icon, name and location.
-        var bounds = new google.maps.LatLngBounds();
-        places.forEach(function(place) {
-          if (!place.geometry) {
-            console.log("Returned place contains no geometry");
-            return;
-          }
-          var icon = {
-            url: place.icon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(25, 25)
-          };
-
-          // Create a marker for each place.
-          markers.push(new google.maps.Marker({
-            map: map,
-            icon: icon,
-            title: place.name,
-            position: place.geometry.location
-          }));
-
-          if (place.geometry.viewport) {
-            // Only geocodes have viewport.
-            bounds.union(place.geometry.viewport);
-          } else {
-            bounds.extend(place.geometry.location);
-          }
-        });
-        map.fitBounds(bounds);
-      })
-    }
-  </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrFjP4NwF0V5vMmwBBXQchO66K64Iq1vc&callback=initMap&libraries=places" async defer></script>
+    <!-- google maps -->
+    <div id="map"></div>
+    <br>
+    <script type ="text/javascript" src="/assets/scripts/api/maps.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrFjP4NwF0V5vMmwBBXQchO66K64Iq1vc&callback=initMap&libraries=places" async defer></script>
   </div>
   <!-- END GOOGLE MAPS  -->
+
   <!-- handlebars content -->
   <div class="content">
     <div class="container-fluid">
@@ -146,19 +76,21 @@
 
   <script type="text/javascript">
     const client = filestack.init('ArtZK1CTQ8eWbbaSVG2E8z');
-    let storeImageObject
-    let getImageurl
+    var watermarkHandle = ''
+
     function showPicker() {
-      client.pick().
-      then(
-        function(result) {
-          result.filesUploaded.forEach(function(file) {
-            addLink(file)
+      client.pick()
+      .then(function(result) {
+          console.log(JSON.stringify(result))
+          watermarkHandle = result.filesUploaded[0].handle;
+         //Logs the new watermark handle in the console
+          console.log(watermarkHandle)
           })
-        })
-      }
+        }
   </script>
   <!-- END FILESTACK -->
+
+  <!-- back button  -->
   <button class="back-btn btn btn-primary">Back</button>
 
   <!-- MODALS MODALS MODALS -->
