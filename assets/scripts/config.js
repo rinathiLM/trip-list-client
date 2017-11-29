@@ -2,7 +2,7 @@
 
 const config = {
   apiOrigins: {
-    production: 'https://trip-list.herokuapp.com/'
+    production: 'https://trip-list.herokuapp.com'
   }
 }
 
