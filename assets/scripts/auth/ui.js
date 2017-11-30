@@ -19,6 +19,7 @@ const signInSuccess = function (response) {
   $('#sign-up-modal').modal('hide')
   $('.sign-up-form')[0].reset()
   $('#home-msg').hide()
+  $('body').css('background-image', 'none')
 }
 
 const signInFailure = function () {
@@ -35,6 +36,8 @@ const signOutSuccess = function () {
   $('#enter-location')[0].reset()
   $('.content').empty()
   $('#message').text('')
+  $('#home-msg').show()
+  $('body').css('background-image', 'url("https://i.imgur.com/3ElO1rq.png")')
 }
 
 const signOutFailure = function () {

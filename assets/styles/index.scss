@@ -2,6 +2,9 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap';
 @import url('//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap-glyphicons.css');
 @import './navbar.scss';
+@import './map.scss';
+@import './modals.scss';
+@import './hbs.scss';
 
 body {
   .display-when-logged-in {
@@ -15,21 +18,17 @@ body {
     text-align: center;
   }
   padding-top: 50px;
-}
-
-#map {
-  margin-top: 15px;
-  // display: block;
-  // float:left;
-  // margin-left:0px;
-  height: 400px;
-  width: 80%;
-  /* margin-top:59px; only if header fixed*/
+  background-image: url('https://i.imgur.com/3ElO1rq.png');
+  background-repeat: no-repeat;
 }
 
 #home-msg {
-  font-family: 'Rochester', cursive;
+   // font-family: 'Amatic SC', cursive;
+  // font-family: 'Lato', sans-serif;
+  font-family: 'Cookie', cursive;
+  // font-family: 'Cormorant Upright', serif;
   font-size: 40px;
+  // text-transform: uppercase;
   // padding-top: 60px;
   text-align: center;
   font-weight: lighter;
@@ -43,6 +42,7 @@ h3 {
 }
 
 .location {
+  text-align: center;
   // display: inline-block;
   // position: absolute;
   // margin-top: 15px;
@@ -50,39 +50,4 @@ h3 {
 
 .back-btn {
   display: none;
-}
-
-// spacing in modal form inputs and font
-.form-horizontal {
-  margin-left: 15px;
-  margin-right: 15px;
-  padding-top: 20px;
-}
-
-.modal-title,
-.modal-body {
-  font-family: 'Amatic SC', cursive;
-  font-size: 25px;
-  font-weight: bold;
-}
-
-// handlebars content
-.content {
-  // margin-top: 75px;
-  padding-left: 50px;
-  padding-right: 50px;
-}
-
-// table layout for handlebars trips are displayed
-table {
-  table-layout: fixed;
-}
-
-.column-1 {
-  width: 40%;
-}
-
-.column-2,
-.column-3 {
-  width: 30%;
 }

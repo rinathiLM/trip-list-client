@@ -1,0 +1,20 @@
+// handlebars content
+.content {
+  // margin-top: 75px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+// table layout for handlebars trips are displayed
+table {
+  table-layout: fixed;
+}
+
+.column-1 {
+  width: 40%;
+}
+
+.column-2,
+.column-3 {
+  width: 30%;
+}
