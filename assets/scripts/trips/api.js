@@ -4,7 +4,7 @@ const config = require('../config')
 const store = require('../store')
 
 const createTrip = (data) => {
-  console.log('got to create trip api, data is ', data)
+  // console.log('got to create trip api, data is ', data)
   return $.ajax({
     url: config.apiOrigin + '/trips',
     method: 'POST',
@@ -16,7 +16,7 @@ const createTrip = (data) => {
 }
 
 const getTrips = function () {
-  console.log('got to api - show all trips')
+  // console.log('got to api - show all trips')
   return $.ajax({
     url: config.apiOrigin + '/trips',
     method: 'GET',
@@ -27,7 +27,7 @@ const getTrips = function () {
 }
 
 const deleteTrip = (tripId) => {
-  console.log('got to delete api, delete trip id is ', tripId)
+  // console.log('got to delete api, delete trip id is ', tripId)
   return $.ajax({
     url: config.apiOrigin + '/trips/' + tripId,
     method: 'DELETE',

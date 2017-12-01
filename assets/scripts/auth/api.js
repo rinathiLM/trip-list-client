@@ -2,7 +2,7 @@ const config = require('../config')
 const store = require('../store')
 
 const signUp = (data) => {
-  console.log('got to sign-up api')
+  // console.log('got to sign-up api')
   store.onSignUpSignIn = data
   return $.ajax({
     url: config.apiOrigin + '/sign-up',
@@ -20,7 +20,7 @@ const signUpSignIn = function (data) {
 }
 
 const signIn = (data) => {
-  console.log('got to sign-in api')
+  // console.log('got to sign-in api')
   return $.ajax({
     url: config.apiOrigin + '/sign-in',
     method: 'POST',

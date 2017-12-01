@@ -7,7 +7,7 @@ const ui = require('./ui')
 const onCreateTrip = (event) => {
   event.preventDefault()
   const data = getFormFields(event.target)
-  console.log('data entered is ', data)
+  // console.log('data entered is ', data)
   api.createTrip(data)
     .then(ui.createTripSuccess)
     .catch(ui.createTripFailure)
@@ -27,7 +27,7 @@ const onShowAllTrips = (event) => {
 const onDeleteTrip = (event) => {
   event.preventDefault()
   const tripId = $(event.target).data('id')
-  console.log('trip to delete is ', tripId)
+  // console.log('trip to delete is ', tripId)
   api.deleteTrip(tripId)
     .then(ui.deleteTripSuccess(tripId))
     .then(getTripsAgain)
@@ -36,11 +36,9 @@ const onDeleteTrip = (event) => {
 
 const onUpdateTrip = (event) => {
   event.preventDefault()
-  console.log('yes is clicked in update modal')
+  // console.log('yes is clicked in update modal')
   const tripId = $(event.target).data('id')
-  // const data = getFormFields(event.target)
-  // console.log('data is ', data)
-  console.log('trip to edit id is ', tripId)
+  // console.log('trip to edit id is ', tripId)
   api.updateTrip(tripId)
     .then(ui.updateTripSuccess(tripId))
     .then(getTripsAgain)
@@ -49,9 +47,9 @@ const onUpdateTrip = (event) => {
 
 const onUndoUpdate = (event) => {
   event.preventDefault()
-  console.log('not yet is clicked in update modal')
+  // console.log('not yet is clicked in update modal')
   const tripId = $(event.target).data('id')
-  console.log('trip to edit id is ', tripId)
+  // console.log('trip to edit id is ', tripId)
   api.updateTripFalse(tripId)
     .then(ui.updateTripFalseSuccess(tripId))
     .then(getTripsAgain)

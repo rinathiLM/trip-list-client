@@ -54,9 +54,9 @@
     <div class="location">
       <h3>Enter your next adventure here!</h3>
       <form id="enter-location">
-        <input name="trip[image]" id="url-text" type="url" placeholder="Upload an image">
-        <input class="btn btn-primary modal-button" type="button" value="Upload" onclick="showPicker()" />
+        <input name="trip[image]" class="url-text" type="hidden">
         <input name="trip[location]" type="text" id="location-entry" placeholder="Search a location" required>
+        <input class="btn btn-primary modal-button" type="button" value="Upload a picture" onclick="showPicker()" />
         <input type="submit" value="Add to my list" class="btn btn-primary" id="search-location-btn">
       </form>
     </div>
@@ -101,7 +101,7 @@
         var bounds = new google.maps.LatLngBounds();
         places.forEach(function(place) {
           if (!place.geometry) {
-            console.log("Returned place contains no geometry");
+            // console.log("Returned place contains no geometry");
             return;
           }
           var icon = {
@@ -149,7 +149,7 @@
     let imageUrl
 
     function showPicker() {
-      console.log('clicking picker')
+      // console.log('clicking picker')
       client.pick({
         imageMax: [250, 250]
       })
@@ -162,7 +162,8 @@
     }
 
     function urlImport() {
-      document.querySelector('#url-text').value = imageUrl
+      // document.querySelector('.url-text').value = imageUrl
+      $("input[class='url-text'").val(imageUrl)
     }
   </script>
   <!-- END FILESTACK -->
