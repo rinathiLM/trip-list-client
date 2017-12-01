@@ -6,6 +6,9 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import './modals.scss';
 @import './hbs.scss';
 
+.location-heading {
+  height: 50px;
+}
 .thumbnail {
   height: auto;
   width: auto;

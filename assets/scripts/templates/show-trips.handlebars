@@ -1,6 +1,7 @@
 {{#if trips}}
 {{#each trips as |trip|}}
 <div class="grid col-sm-6 col-md-4">
+  <h3>{{trip.location}}</h3>
   <div class="thumbnail">
       <img src="{{trip.image}}" onerror=this.src="https://i.imgur.com/BRA2mQf.png">
       <div class="clearfix"></div>
