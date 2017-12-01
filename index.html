@@ -38,10 +38,13 @@
       </div>
     </div>
   </div>
+  <!-- END nav bar -->
+
   <!-- home screen -->
   <h2 id="home-msg">Sign up or login to start adding trips to your bucketlist</h2>
   <div class="background">
   </div>
+
   <!-- user messages -->
   <div id="message" class="message"></div>
 
@@ -51,7 +54,9 @@
     <div class="location">
       <h3>Enter your next adventure here!</h3>
       <form id="enter-location">
-        <input name="trip[location]" type="text" id="location-entry" placeholder="Press enter to search" required>
+        <input name="trip[image]" id="url-text" type="url" placeholder="Upload an image">
+        <input class="btn btn-primary modal-button" type="button" value="Upload" onclick="showPicker()" />
+        <input name="trip[location]" type="text" id="location-entry" placeholder="Search a location" required>
         <input type="submit" value="Add to my list" class="btn btn-primary" id="search-location-btn">
       </form>
     </div>
@@ -136,25 +141,30 @@
     </div>
   </div>
 
-  <!-- FILESTACK for pictures upload -->
-  <!-- <input class="btn btn-primary modal-button" type="button" value="Upload" onclick="showPicker()" />
+  <!-- FILESTACK script -->
+  <script type="text/javascript" src="https://static.filestackapi.com/v3/filestack.js"></script>
 
-  <script src="https://static.filestackapi.com/v3/filestack.js"></script>
-
-  <script type="text/javascript">
+  <script>
     const client = filestack.init('ArtZK1CTQ8eWbbaSVG2E8z');
-    var watermarkHandle = ''
+    let imageUrl
 
     function showPicker() {
-      client.pick()
+      console.log('clicking picker')
+      client.pick({
+        imageMax: [250, 250]
+      })
       .then(function(result) {
-          console.log(JSON.stringify(result))
-          watermarkHandle = result.filesUploaded[0].handle;
-         //Logs the new watermark handle in the console
-          console.log(watermarkHandle)
-          })
-        }
-  </script> -->
+        // console.log(JSON.stringify(result))
+        imageUrl = result.filesUploaded[0].url
+      //  console.log('filestack url is ', imageUrl)
+        urlImport()
+      })
+    }
+
+    function urlImport() {
+      document.querySelector('#url-text').value = imageUrl
+    }
+  </script>
   <!-- END FILESTACK -->
 
   <!-- back button  -->

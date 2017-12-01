@@ -38,6 +38,8 @@ const onUpdateTrip = (event) => {
   event.preventDefault()
   console.log('yes is clicked in update modal')
   const tripId = $(event.target).data('id')
+  // const data = getFormFields(event.target)
+  // console.log('data is ', data)
   console.log('trip to edit id is ', tripId)
   api.updateTrip(tripId)
     .then(ui.updateTripSuccess(tripId))
