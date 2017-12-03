@@ -5,6 +5,7 @@ const createTripSuccess = () => {
   // console.log('successfully created trip')
   $('#message').text('You\'ve successfully entered a trip!')
   $('#enter-location')[0].reset()
+  $('.url-text').text('')
 }
 
 const createTripFailure = () => {

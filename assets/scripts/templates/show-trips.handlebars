@@ -1,26 +1,24 @@
 {{#if trips}}
-{{#each trips as |trip|}}
-<div class="grid col-sm-6 col-md-4">
-  <h3>{{trip.location}}</h3>
-  <div class="thumbnail">
-      <img src="{{trip.image}}" onerror=this.src="https://i.imgur.com/BRA2mQf.png">
-      <div class="clearfix"></div>
-      <div class="caption">
-        <h4>Ready to check this place off your list? {{trip.done}}</h4>
-        <button class="btn btn-default" data-id="{{trip.id}}" data-toggle="modal" data-target="#update-trip-modal{{trip.id}}"><span class="glyphicon glyphicon-pencil"></span>
+  {{#each trips as |trip|}}
+    <div class="grid col-sm-6 col-md-4">
+      <h3>{{trip.location}}</h3>
+      <div class="thumbnail">
+        <img src="{{trip.image}}" onerror=this.src="https://i.imgur.com/BRA2mQf.png">
+        <div class="clearfix"></div>
+        <div class="caption">
+          <h4>Ready to check this place off your list? {{trip.done}}</h4>
+          <button class="btn btn-default" data-id="{{trip.id}}" data-toggle="modal" data-target="#update-trip-modal{{trip.id}}"><span class="glyphicon glyphicon-pencil"></span>
         </button>
-        <button class="btn btn-default" data-id="{{trip.id}}" data-toggle="modal" data-target="#delete-trip-modal{{trip.id}}"><span class="glyphicon glyphicon-trash"></span>
+          <button class="btn btn-default" data-id="{{trip.id}}" data-toggle="modal" data-target="#delete-trip-modal{{trip.id}}"><span class="glyphicon glyphicon-trash"></span>
         </button>
-        <!-- <button class="update-pic btn btn-default" data-id="{{trip.id}}" onclick="showPicker()"><span class="glyphicon glyphicon-camera"></span>
-        <input name="trip[image]" class="url-text">
-        </button> -->
+        </div>
       </div>
-  </div>
-</div>
-{{/each}}
+    </div>
+  {{/each}}
 {{else}}
   <h3>It doesn't look like you have any trips.</h3>
 {{/if}}
+</table>
 
 <!-- MODALS -->
 {{#each trips as |trip|}}
@@ -32,15 +30,15 @@
           <span id="update-message"></span>
         </div>
         <div class="modal-body">
-           <p>Did you visit this place?</p>
-         </div>
-            <div class="modal-footer">
-              <button type="button" class="update-trip btn btn-success" data-id="{{trip.id}}">Yes!</button>
-              <button type="button" class="undo-update btn btn-default" id="clearUpdate" data-id="{{trip.id}}" data-dismiss="modal">Not yet</button>
-            </div>
+          <p>Did you visit this place?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="update-trip btn btn-success" data-id="{{trip.id}}">Yes!</button>
+          <button type="button" class="undo-update btn btn-default" id="clearUpdate" data-id="{{trip.id}}" data-dismiss="modal">Not yet</button>
         </div>
       </div>
     </div>
+  </div>
   </div>
 
   <!-- delete trip modal with warning -->

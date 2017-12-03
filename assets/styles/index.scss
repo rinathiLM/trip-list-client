@@ -4,18 +4,23 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import './navbar.scss';
 @import './map.scss';
 @import './modals.scss';
-@import './hbs.scss';
 
 .location-heading {
   height: 50px;
 }
+
+.content {
+  // margin-top: 75px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
 .thumbnail {
   height: auto;
   width: auto;
   text-align: center;
-  // border: none;
-  overflow: hidden;
-  color: white;
+  border: none;
+  //  color: white;
 }
 
 .thumbnail > img {
@@ -40,13 +45,8 @@ body {
 }
 
 #home-msg {
-   // font-family: 'Amatic SC', cursive;
-  // font-family: 'Lato', sans-serif;
   font-family: 'Cookie', cursive;
-  // font-family: 'Cormorant Upright', serif;
   font-size: 40px;
-  // text-transform: uppercase;
-  // padding-top: 60px;
   text-align: center;
   font-weight: lighter;
 }
@@ -55,29 +55,16 @@ h3 {
   font-family: 'Amatic SC', cursive;
   font-size: 30px;
   font-weight: bold;
-//  display: inline-block;
 }
 
 .location {
   text-align: center;
-  // display: inline-block;
-  // position: absolute;
-  // margin-top: 15px;
 }
 
 .back-btn {
   display: none;
 }
 
-.column-1 {
-  width: 30%
-}
-
-.column-2,
-.column-4 {
-  width: 15%
-}
-
-.column-4 {
-  width: 40%;
+.modal-open {
+  overflow: scroll;
 }
