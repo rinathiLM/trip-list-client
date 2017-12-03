@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Tripit List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Do not add `link` tags-->
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Do not add `script` tags-->
+  <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+  <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+  <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Rochester|Fjalla+One|Raleway|Cookie|Cormorant+Upright|Lato" rel="stylesheet">
+</head>
+
+<body class="container-fluid">
+  <!-- nav bar -->
+  <div class="navbar navbar-toggleable-md navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+        <a class="navbar-brand" href="#">Tripit List <span class="glyphicon glyphicon-plane"></span></a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="hide-when-logged-in"><a href="#" data-toggle="modal" data-target="#sign-up-modal">Sign Up</a></li>
+          <li class="hide-when-logged-in"><a href="#" data-toggle="modal" data-target="#sign-in-modal">Login</a></li>
+          <li class="display-when-logged-in"><a href="#" id="show-trips">My Trips</a></li>
+          <li class="display-when-logged-in"><a href="#" data-toggle="modal" data-target="#change-pwd-modal">Change Password</a></li>
+          <li class="display-when-logged-in"><a href="#" id="sign-out" class="sign-out-link">Sign Out</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- END nav bar -->
+
+  <!-- home screen -->
+  <h2 id="home-msg">Sign up or login to start adding trips to your bucketlist</h2>
+  <div class="background">
+  </div>
+
+  <!-- user messages -->
+  <div id="message" class="message"></div>
+
+  <!-- GOOGLE MAPS  -->
+  <!-- location entry -->
+  <div class="display-when-logged-in">
+    <div class="location">
+      <h3>Enter your next adventure here!</h3>
+      <form id="enter-location">
+        <input name="trip[image]" class="url-text" type="hidden">
+        <input name="trip[location]" type="text" id="location-entry" placeholder="Search a location" required>
+        <input class="btn btn-primary modal-button" type="button" value="Upload a picture" onclick="showPicker()" />
+        <input type="submit" value="Add to my list" class="btn btn-primary" id="search-location-btn">
+      </form>
+    </div>
+    <!-- google maps -->
+    <div id="map"></div>
+    <br>
+    <script>
+      function initMap() {
+        var options = {
+          zoom: 10,
+          center: {
+            lat: 47.6080,
+            lng: -122.3351
+          }
+        }
+
+        var map = new google.maps.Map(document.getElementById('map'), options)
+
+        var searchBox = new google.maps.places.SearchBox(document.getElementById('location-entry'))
+
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+
+        var markers = []
+
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+          // Clear out the old markers.
+          markers.forEach(function(marker) {
+            marker.setMap(null);
+          })
+
+          markers = []
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              // console.log("Returned place contains no geometry");
+              return;
+            }
+            var icon = {
+              url: place.icon,
+              size: new google.maps.Size(71, 71),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(17, 34),
+              scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.
+            markers.push(new google.maps.Marker({
+              map: map,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map.fitBounds(bounds);
+        })
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrFjP4NwF0V5vMmwBBXQchO66K64Iq1vc&libraries=places&callback=initMap" async defer></script>
+  </div>
+  <!-- END GOOGLE MAPS  -->
+
+  <!-- handlebars content -->
+  <div class="content">
+    <div class="container-fluid">
+    </div>
+  </div>
+
+  <!-- FILESTACK script -->
+  <script type="text/javascript" src="https://static.filestackapi.com/v3/filestack.js"></script>
+
+  <script>
+    const client = filestack.init('ArtZK1CTQ8eWbbaSVG2E8z');
+    let imageUrl
+
+    function showPicker() {
+      // console.log('clicking picker')
+      client.pick({
+          imageMax: [250, 250]
+        })
+        .then(function(result) {
+          // console.log(JSON.stringify(result))
+          imageUrl = result.filesUploaded[0].url
+          //  console.log('filestack url is ', imageUrl)
+          urlImport()
+        })
+    }
+
+    function urlImport() {
+      document.querySelector('.url-text').value = imageUrl
+      //$("input[class='url-text'").val(imageUrl)
+    }
+  </script>
+  <!-- END FILESTACK -->
+
+  <!-- back button  -->
+  <button class="back-btn btn btn-primary">Back</button>
+
+  <!-- MODALS MODALS MODALS -->
+  <!--  sign-up modal -->
+  <div class="modal fade" id="sign-up-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Sign Up</h4>
+          <span id="signup-message"></span>
+        </div>
+        <form class="sign-up-form form-horizontal" id="sign-up">
+          <input type="email" name="credentials[email]" id="sign-up-email" class="form-control" placeholder="Email">
+          <input type="password" name="credentials[password]" id="sign-up-password" class="form-control" placeholder="Password" required>
+          <input type="password" name="credentials[password_confirmation]" id="sign-up-password-confirmation" class="form-control" placeholder="Confirm Password">
+          <div class="modal-body">
+          </div>
+          <div class="modal-footer">
+            <button type="submit" name="submit" class="btn btn-success">Sign Up</button>
+            <button type="reset" class="btn btn-default">Reset</button>
+            <button type="button" class="btn btn-default" id="clearSignup" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!--  sign-in modal -->
+  <div class="modal fade" id="sign-in-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Login</h4>
+          <span id="login-message"></span>
+        </div>
+        <form class="sign-in-form form-horizontal" id="login">
+          <input type="email" name="credentials[email]" id="sign-in-email" class="form-control" placeholder="Email">
+          <input type="password" name="credentials[password]" id="sign-in-password" class="form-control" placeholder="Password">
+          <div class="modal-body">
+          </div>
+          <div class="modal-footer">
+            <button type="submit" name="submit" class="btn btn-success">Login</button>
+            <button type="reset" class="btn btn-default">Reset</button>
+            <button type="button" class="btn btn-default" id="clearLogin" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!--  change password modal -->
+  <div class="modal fade" id="change-pwd-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Change Password</h4>
+          <span id="password-message"></span>
+        </div>
+        <form class="change-pwd-form form-horizontal" id="change-password">
+          <input type="password" name="passwords[old]" id="change-password-old" class="form-control" placeholder="Current Passward" required>
+          <input type="password" name="passwords[new]" id="change-password-new" class="form-control" placeholder="New Password" required>
+          <div class="modal-body">
+          </div>
+          <div class="modal-footer">
+            <button type="submit" name="submit" class="btn btn-success">Confirm</button>
+            <button type="reset" class="btn btn-default">Reset</button>
+            <button type="button" class="btn btn-default" id="clearPass" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
